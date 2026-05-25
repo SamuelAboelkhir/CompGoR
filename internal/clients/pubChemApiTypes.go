@@ -1,4 +1,4 @@
-package pubchemclient
+package clients
 
 type Substances struct {
 	PCSubstances []struct {

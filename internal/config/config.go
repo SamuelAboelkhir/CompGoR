@@ -4,10 +4,10 @@ package config
 import (
 	"bufio"
 
-	"github.com/SamuelAboelkhir/CompGoR/internal/pubchemclient"
+	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
 )
 
 type Config struct {
-	APIClient *pubchemclient.PubChemClient
+	APIClient clients.Client
 	Scanner   *bufio.Scanner
 }

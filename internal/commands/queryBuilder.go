@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 
+	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
 	"github.com/SamuelAboelkhir/CompGoR/internal/config"
 )
 
@@ -44,15 +45,18 @@ func queryCommandHandler(cfg *config.Config, args ...string) error {
 		fmt.Println(query)
 	}
 
-	elements, err := cfg.APIClient.GetCompounds(query.input.domain, query.input.namespace, query.input.identifiers, query.output)
-	if err != nil {
-		return err
-	}
-	for _, element := range elements.PCCompounds {
-		fmt.Println("Element ID: ", element.ID)
-		fmt.Println("Props: ", element.Props)
-		for _, atom := range element.Atoms.Element {
-			fmt.Println("Atom: ", atom)
+	c, ok := cfg.APIClient.(*clients.HTTPClient)
+	if ok {
+		elements, err := c.GetCompounds(query.input.domain, query.input.namespace, query.input.identifiers, query.output)
+		if err != nil {
+			return err
+		}
+		for _, element := range elements.PCCompounds {
+			fmt.Println("Element ID: ", element.ID)
+			fmt.Println("Props: ", element.Props)
+			for _, atom := range element.Atoms.Element {
+				fmt.Println("Atom: ", atom)
+			}
 		}
 	}
 	return nil

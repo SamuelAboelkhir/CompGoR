@@ -5,13 +5,18 @@ import (
 	"os"
 	"time"
 
+	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
 	"github.com/SamuelAboelkhir/CompGoR/internal/commands"
 	"github.com/SamuelAboelkhir/CompGoR/internal/config"
-	"github.com/SamuelAboelkhir/CompGoR/internal/pubchemclient"
 )
 
 func main() {
-	newClient := pubchemclient.NewClient(5*time.Second, 5*time.Minute)
+	clientsRegistry := clients.Clients{
+		RegisteredClients: make(map[string]clients.Client),
+	}
+	httpClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
+	clientsRegistry.Register("pubChem", httpClient)
+
 	newScanner := bufio.NewScanner(os.Stdin)
 
 	c := commands.Commands{
@@ -26,7 +31,7 @@ func main() {
 	c.Register(help.Name(), &help)
 
 	cfg := config.Config{
-		APIClient: newClient,
+		APIClient: clientsRegistry.RegisteredClients["pubChem"],
 		Scanner:   newScanner,
 	}
 

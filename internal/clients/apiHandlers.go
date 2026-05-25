@@ -1,4 +1,4 @@
-package pubchemclient
+package clients
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func apiHandler[T any](c *PubChemClient, url string) (T, error) {
+func httpAPIHandler[T any](c *HTTPClient, url string) (T, error) {
 	fmt.Println(url)
 
 	if data, ok := c.cache.Get(url); ok {
