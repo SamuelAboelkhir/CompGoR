@@ -3,6 +3,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"time"
 
@@ -39,6 +40,16 @@ func main() {
 		APIClient: clientsRegistry.RegisteredClients["pubChem"],
 		Scanner:   newScanner,
 	}
+	args := os.Args[1:]
 
-	repl(&cfg, &c)
+	if len(args) > 0 {
+		commandName := args[0]
+		err := c.Run(&cfg, commandName, args...)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+	} else {
+		repl(&cfg, &c)
+	}
 }
