@@ -6,7 +6,7 @@ import "strings"
 // CleanInput splits a string into a slice of words, trimming spaces and punctuation
 // Example:
 //
-//	CleanInput("Hello, world!") // returns ["Hello", "world"]
+//	CleanInput("Hello, world!") // returns [["Hello", "world"]]
 func CleanInput(text string) []string {
 	words := strings.Fields(text)
 	return words
