@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
@@ -69,10 +70,13 @@ func queryCommandHandler(cfg *config.Config, args ...string) error {
 			return err
 		}
 		for _, element := range elements.PCCompounds {
-			fmt.Println("Element ID: ", element.ID)
-			fmt.Println("Props: ", element.Props)
+			elementID, _ := json.MarshalIndent(element.ID, "", " ")
+			elementProps, _ := json.MarshalIndent(element.Props, "", " ")
+			fmt.Println("Element ID:", string(elementID))
+			fmt.Println("Props: ", string(elementProps))
 			for _, atom := range element.Atoms.Element {
-				fmt.Println("Atom: ", atom)
+				atom, _ := json.MarshalIndent(atom, "", " ")
+				fmt.Println("Atom:", string(atom))
 			}
 		}
 	}

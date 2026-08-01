@@ -2,6 +2,7 @@ package clients
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -20,7 +21,6 @@ type HTTPClient struct {
 func (c *HTTPClient) GetCompounds(domain, namespace, identifier, output string) (Compounds, error) {
 	url := fmt.Sprintf("%s/%s/%s/%s/%s", commonURL, domain, namespace, identifier, output)
 	compound, err := httpAPIHandler[Compounds](c, url)
-	fmt.Println("Is printing?", compound)
 	if err != nil {
 		return Compounds{}, err
 	}
@@ -90,6 +90,19 @@ func httpAPIHandler[T any](c *HTTPClient, url string) (T, error) {
 	var responseObject T
 	if err := json.Unmarshal(data, &responseObject); err != nil {
 		return responseObject, err
+	}
+
+	checkResponse := func(responseObject T) bool {
+		switch v := any(responseObject).(type) {
+		case Compounds:
+			return v.PCCompounds == nil
+		default:
+			return false
+		}
+	}
+
+	if checkResponse(responseObject) {
+		return responseObject, errors.New("failed to fill the response object")
 	}
 
 	c.cache.Add(url, data)

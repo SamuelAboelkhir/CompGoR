@@ -29,8 +29,11 @@ func main() {
 	help := commands.Help{
 		Commands: &c,
 	}
+	showTable := commands.ShowTable{}
+
 	c.Register(builder.Name(), &builder)
 	c.Register(help.Name(), &help)
+	c.Register(showTable.Name(), &showTable)
 
 	cfg := config.Config{
 		APIClient: clientsRegistry.RegisteredClients["pubChem"],
