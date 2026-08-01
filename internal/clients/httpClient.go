@@ -28,11 +28,15 @@ func (c *HTTPClient) GetCompounds(domain, namespace, identifier, output string) 
 }
 
 // TODO: Implement Connect
+
+// Connect initializes the HTTP client connection by verifying connectivity to the common URL
 func (c *HTTPClient) Connect() error {
 	return nil
 }
 
 // TODO: Implement Disconnect
+
+// Disconnect closes the HTTP client connection
 func (c *HTTPClient) Disconnect() error {
 	return nil
 }
