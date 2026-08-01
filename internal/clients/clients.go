@@ -1,40 +1,32 @@
-// Package clients: This package handles all the API requests to PubChem
+// Package clients: This package provides a generic client interface and management system for various protocol clients.
 package clients
 
 import (
-	"net/http"
 	"time"
-
-	"github.com/SamuelAboelkhir/CompGoR/internal/cache"
 )
 
+// Client is a generic client interface for all types of clients
 type Client interface {
 	Connect() error
 	Disconnect() error
 	GetProtocol() string
 }
 
+// Clients struct holds a map of registered clients
 type Clients struct {
 	RegisteredClients map[string]Client
 }
 
+// Register adds a new client to the RegisteredClients map
 func (c *Clients) Register(name string, client Client) {
 	c.RegisteredClients[name] = client
 }
 
+// NewClient creates a new client based on the protocol specified
 func (c *Clients) NewClient(timeout, cacheTimeout time.Duration, protocol string) Client {
 	switch protocol {
 	case "HTTP":
 		return NewHTTPClient(timeout, cacheTimeout)
 	}
 	return nil
-}
-
-func NewHTTPClient(timeout, cacheTimeout time.Duration) *HTTPClient {
-	return &HTTPClient{
-		cache: cache.NewCache(cacheTimeout),
-		httpClient: http.Client{
-			Timeout: timeout,
-		},
-	}
 }

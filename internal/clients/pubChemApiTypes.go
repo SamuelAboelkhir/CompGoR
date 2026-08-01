@@ -1,5 +1,6 @@
 package clients
 
+// Substances represents the structure of the PubChem substances data.
 type Substances struct {
 	PCSubstances []struct {
 		Sid struct {
@@ -54,6 +55,7 @@ type Substances struct {
 	} `json:"PC_Substances"`
 }
 
+// Compounds represents the structure of the PubChem compounds data.
 type Compounds struct {
 	PCCompounds []struct {
 		ID struct {

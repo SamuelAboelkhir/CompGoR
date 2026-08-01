@@ -7,6 +7,7 @@ import (
 	"github.com/SamuelAboelkhir/CompGoR/internal/config"
 )
 
+// QueryConstructor represents a query to the PubChem API
 type QueryConstructor struct {
 	input struct {
 		domain string
@@ -19,8 +20,11 @@ type QueryConstructor struct {
 	output string
 }
 
+// QueryBuilder is a command that builds a query to the PubChem API
+// and allows the user to interactively build and execute a query to the PubChem API
 type QueryBuilder struct{}
 
+// Execute implements the Command interface
 func (q *QueryBuilder) Execute(cfg *config.Config, args ...string) error {
 	err := queryCommandHandler(cfg, args...)
 	if err != nil {
@@ -29,14 +33,27 @@ func (q *QueryBuilder) Execute(cfg *config.Config, args ...string) error {
 	return nil
 }
 
+// Name returns the name of the command
 func (q *QueryBuilder) Name() string {
 	return "buildQuery"
 }
 
+// Help returns the help text for the command
 func (q *QueryBuilder) Help() string {
-	return "Takes a domain, namespace, identifier, an optional operation, and an output type, and queries the PubChem API for a matching chemical substance or compound"
+	helpString := `Takes a domain, namespace, identifier, an optional operation, 
+	and an output type, and queries the PubChem API for a matching 
+	chemical substance or compound
+	Example: domain: compound, 
+		 namespace: name, 
+		 identifier: hydrogen, 
+		 operation: <optional, ENTER to skip>, 
+		 format: JSON`
+	return helpString
 }
 
+// TODO: Add support for multiple identifiers
+//
+// `queryCommandHandler` handles the query command by prompting the user for input and executing the query
 func queryCommandHandler(cfg *config.Config, args ...string) error {
 	steps := []string{"domain: ", "namespace: ", "identifier: ", "operation (optional): ", "output format: "}
 	query := QueryConstructor{}
@@ -62,6 +79,7 @@ func queryCommandHandler(cfg *config.Config, args ...string) error {
 	return nil
 }
 
+// `buildQuery` builds a query to the PubChem API by prompting the user for input
 func buildQuery(cfg *config.Config, query *QueryConstructor, step string) {
 	fmt.Printf("Please provide a %s", step)
 	cfg.Scanner.Scan()

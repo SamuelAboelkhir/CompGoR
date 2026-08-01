@@ -1,5 +1,6 @@
 package clients
 
+// Constants for the PubChem client
 const (
 	commonURL             = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 	defaultTimeout        = 60

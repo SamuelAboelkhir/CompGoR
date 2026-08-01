@@ -1,3 +1,4 @@
+// This is the main entry point for the application. It initializes the clients, commands, and configuration, and then starts the REPL.
 package main
 
 import (
@@ -10,6 +11,7 @@ import (
 	"github.com/SamuelAboelkhir/CompGoR/internal/config"
 )
 
+// TODO: Add a way to configure the API client and the scanner from the command line
 func main() {
 	clientsRegistry := clients.Clients{
 		RegisteredClients: make(map[string]clients.Client),
