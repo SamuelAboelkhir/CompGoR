@@ -54,7 +54,7 @@ func repl(cfg *config.Config, cmd *commands.Commands) {
 
 var completer = readline.NewPrefixCompleter(
 	readline.PcItem("help"),
-	readline.PcItem("buildQuery"),
+	readline.PcItem("buildPubChemQuery"),
 	readline.PcItem("showTable"),
 	readline.PcItem("exit"),
 	readline.PcItem("fetchJSONData"),

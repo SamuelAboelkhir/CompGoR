@@ -21,12 +21,12 @@ type QueryConstructor struct {
 	output string
 }
 
-// QueryBuilder is a command that builds a query to the PubChem API
+// PubChemQueryBuilder is a command that builds a query to the PubChem API
 // and allows the user to interactively build and execute a query to the PubChem API
-type QueryBuilder struct{}
+type PubChemQueryBuilder struct{}
 
 // Execute implements the Command interface
-func (q *QueryBuilder) Execute(cfg *config.Config, args ...string) error {
+func (q *PubChemQueryBuilder) Execute(cfg *config.Config, args ...string) error {
 	err := queryCommandHandler(cfg, args...)
 	if err != nil {
 		return err
@@ -35,12 +35,12 @@ func (q *QueryBuilder) Execute(cfg *config.Config, args ...string) error {
 }
 
 // Name returns the name of the command
-func (q *QueryBuilder) Name() string {
+func (q *PubChemQueryBuilder) Name() string {
 	return "buildQuery"
 }
 
 // Help returns the help text for the command
-func (q *QueryBuilder) Help() string {
+func (q *PubChemQueryBuilder) Help() string {
 	helpString := `Takes a domain, namespace, identifier, an optional operation, 
 	and an output type, and queries the PubChem API for a matching 
 	chemical substance or compound

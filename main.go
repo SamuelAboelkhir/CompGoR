@@ -26,14 +26,14 @@ func main() {
 		RegisteredCommands: make(map[string]commands.Command),
 	}
 
-	builder := commands.QueryBuilder{}
+	pubChemQueryBuilder := commands.PubChemQueryBuilder{}
 	help := commands.Help{
 		Commands: &c,
 	}
 	showTable := commands.ShowTable{}
 	fetchData := commands.FetchJSONFromURL{}
 
-	c.Register(builder.Name(), &builder)
+	c.Register(pubChemQueryBuilder.Name(), &pubChemQueryBuilder)
 	c.Register(help.Name(), &help)
 	c.Register(showTable.Name(), &showTable)
 	c.Register(fetchData.Name(), &fetchData)
