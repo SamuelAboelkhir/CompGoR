@@ -89,6 +89,11 @@ func httpAPIHandler[T any](c *HTTPClient, url string) (T, error) {
 		return responseObject, err
 	}
 
+	if res.Header.Get("Content-Type") != "application/json" {
+		var responseObject T
+		return responseObject, errors.New("invalid content type, JSON content expected")
+	}
+
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		var responseObject T

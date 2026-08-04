@@ -36,7 +36,7 @@ func (q *PubChemQueryBuilder) Execute(cfg *config.Config, args ...string) error 
 
 // Name returns the name of the command
 func (q *PubChemQueryBuilder) Name() string {
-	return "buildQuery"
+	return "buildPubChemQuery"
 }
 
 // Help returns the help text for the command
@@ -63,7 +63,13 @@ func queryCommandHandler(cfg *config.Config, args ...string) error {
 		fmt.Println(query)
 	}
 
-	c, ok := cfg.APIClient.(*clients.HTTPClient)
+	pubChemClient, ok := cfg.APIClients["pubChem"]
+
+	if !ok {
+		return fmt.Errorf("pubChem client not found")
+	}
+
+	c, ok := pubChemClient.(*clients.HTTPClient)
 	if ok {
 		elements, err := c.GetCompounds(query.input.domain, query.input.namespace, query.input.identifiers, query.output)
 		if err != nil {

@@ -17,8 +17,11 @@ func main() {
 	clientsRegistry := clients.Clients{
 		RegisteredClients: make(map[string]clients.Client),
 	}
-	httpClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
-	clientsRegistry.Register("pubChem", httpClient)
+	defaultHTTPClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
+	pubChemHTTPClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
+
+	clientsRegistry.Register("default", defaultHTTPClient)
+	clientsRegistry.Register("pubChem", pubChemHTTPClient)
 
 	newScanner := bufio.NewScanner(os.Stdin)
 
@@ -39,8 +42,8 @@ func main() {
 	c.Register(fetchData.Name(), &fetchData)
 
 	cfg := config.Config{
-		APIClient: clientsRegistry.RegisteredClients["pubChem"],
-		Scanner:   newScanner,
+		APIClients: clientsRegistry.RegisteredClients,
+		Scanner:    newScanner,
 	}
 	args := os.Args[1:]
 

@@ -20,7 +20,14 @@ func (g *FetchJSONFromURL) Execute(cfg *config.Config, args ...string) error {
 		return errors.New("usage: fetchdata <url>")
 	}
 	url := args[0]
-	c, ok := cfg.APIClient.(*clients.HTTPClient)
+
+	defaultClient, ok := cfg.APIClients["default"]
+
+	if !ok {
+		return fmt.Errorf("pubChem client not found")
+	}
+
+	c, ok := defaultClient.(*clients.HTTPClient)
 	if !ok {
 		return errors.New("client couldn't connect")
 	}

@@ -14,6 +14,7 @@ type Client interface {
 
 // Clients struct holds a map of registered clients
 type Clients struct {
+	// RegisteredClients is a map of client names to client instances
 	RegisteredClients map[string]Client
 }
 

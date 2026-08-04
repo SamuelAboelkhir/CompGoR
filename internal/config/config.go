@@ -9,6 +9,6 @@ import (
 
 // Config holds the configuration of the app
 type Config struct {
-	APIClient clients.Client
-	Scanner   *bufio.Scanner
+	APIClients map[string]clients.Client
+	Scanner    *bufio.Scanner
 }
