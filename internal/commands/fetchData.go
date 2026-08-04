@@ -24,7 +24,7 @@ func (g *FetchJSONFromURL) Execute(cfg *config.Config, args ...string) error {
 	if !ok {
 		return errors.New("client couldn't connect")
 	}
-	data, err := c.FetchData(url)
+	data, err := c.FetchJSONData(url)
 	if err != nil {
 		return err
 	}

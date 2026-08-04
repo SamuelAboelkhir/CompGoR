@@ -27,7 +27,7 @@ func (c *HTTPClient) GetCompounds(domain, namespace, identifier, output string) 
 	return compound, nil
 }
 
-func (c *HTTPClient) FetchData(url string) (any, error) {
+func (c *HTTPClient) FetchJSONData(url string) (any, error) {
 	data, err := httpAPIHandler[any](c, url)
 	if err != nil {
 		return nil, err
