@@ -19,7 +19,7 @@ type HTTPClient struct {
 
 // GetCompounds fetches compounds from the HTTP API
 func (c *HTTPClient) GetCompounds(domain, namespace, identifier, output string) (Compounds, error) {
-	url := fmt.Sprintf("%s/%s/%s/%s/%s", commonURL, domain, namespace, identifier, output)
+	url := fmt.Sprintf("%s/%s/%s/%s/%s", BasePubChemURL, domain, namespace, identifier, output)
 	compound, err := httpAPIHandler[Compounds](c, url)
 	if err != nil {
 		return Compounds{}, err

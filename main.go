@@ -5,7 +5,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
 	"github.com/SamuelAboelkhir/CompGoR/internal/commands"
@@ -17,8 +16,8 @@ func main() {
 	clientsRegistry := clients.Clients{
 		RegisteredClients: make(map[string]clients.Client),
 	}
-	defaultHTTPClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
-	pubChemHTTPClient := clientsRegistry.NewClient(5*time.Second, 5*time.Minute, "HTTP")
+	defaultHTTPClient := clientsRegistry.NewClient(clients.DefaultTimeout, clients.DefaultCacheTimeout, clients.DefaultClientProtocol)
+	pubChemHTTPClient := clientsRegistry.NewClient(clients.PubChemTimeout, clients.PubChemCacheTimeout, clients.PubChemClientProtocol)
 
 	clientsRegistry.Register("default", defaultHTTPClient)
 	clientsRegistry.Register("pubChem", pubChemHTTPClient)
