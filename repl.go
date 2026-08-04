@@ -57,4 +57,5 @@ var completer = readline.NewPrefixCompleter(
 	readline.PcItem("buildQuery"),
 	readline.PcItem("showTable"),
 	readline.PcItem("exit"),
+	readline.PcItem("fetchJSONData"),
 )

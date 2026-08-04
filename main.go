@@ -31,10 +31,12 @@ func main() {
 		Commands: &c,
 	}
 	showTable := commands.ShowTable{}
+	fetchData := commands.FetchJSONFromURL{}
 
 	c.Register(builder.Name(), &builder)
 	c.Register(help.Name(), &help)
 	c.Register(showTable.Name(), &showTable)
+	c.Register(fetchData.Name(), &fetchData)
 
 	cfg := config.Config{
 		APIClient: clientsRegistry.RegisteredClients["pubChem"],

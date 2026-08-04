@@ -27,6 +27,14 @@ func (c *HTTPClient) GetCompounds(domain, namespace, identifier, output string) 
 	return compound, nil
 }
 
+func (c *HTTPClient) FetchData(url string) (any, error) {
+	data, err := httpAPIHandler[any](c, url)
+	if err != nil {
+		return nil, err
+	}
+	return data, nil
+}
+
 // TODO: Implement Connect
 
 // Connect initializes the HTTP client connection by verifying connectivity to the common URL
