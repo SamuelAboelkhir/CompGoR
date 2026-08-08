@@ -14,7 +14,7 @@ import (
 // HTTPClient is a client that fetches data from a HTTP API
 type HTTPClient struct {
 	cache      *cache.Cache
-	httpClient http.Client
+	httpClient *http.Client
 }
 
 // GetCompounds fetches compounds from the HTTP API
@@ -58,7 +58,7 @@ func (c *HTTPClient) GetProtocol() string {
 func NewHTTPClient(timeout, cacheTimeout time.Duration) *HTTPClient {
 	return &HTTPClient{
 		cache: cache.NewCache(cacheTimeout),
-		httpClient: http.Client{
+		httpClient: &http.Client{
 			Timeout: timeout,
 		},
 	}
