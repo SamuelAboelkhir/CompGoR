@@ -1,7 +1,10 @@
 // Package utils: A utility package with helper functions
 package utils
 
-import "strings"
+import (
+	"net/http"
+	"strings"
+)
 
 // CleanInput splits a string into a slice of words, trimming spaces and punctuation
 // Example:
@@ -10,4 +13,8 @@ import "strings"
 func CleanInput(text string) []string {
 	words := strings.Fields(text)
 	return words
+}
+
+func CheckJSON(res *http.Response) bool {
+	return res.Header.Get("Content-Type") == "application/json"
 }

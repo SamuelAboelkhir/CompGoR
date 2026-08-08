@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/SamuelAboelkhir/CompGoR/internal/cache"
+	"github.com/SamuelAboelkhir/CompGoR/internal/utils"
 )
 
 // HTTPClient is a client that fetches data from a HTTP API
@@ -89,9 +90,10 @@ func httpAPIHandler[T any](c *HTTPClient, url string) (T, error) {
 		return responseObject, err
 	}
 
-	if res.Header.Get("Content-Type") != "application/json" {
+	isJSON := utils.CheckJSON(res)
+	if !isJSON {
 		var responseObject T
-		return responseObject, errors.New("invalid content type, JSON content expected")
+		return responseObject, errors.New("invalid content type, expected JSON")
 	}
 
 	data, err := io.ReadAll(res.Body)
