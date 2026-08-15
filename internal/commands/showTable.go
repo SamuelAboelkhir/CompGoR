@@ -7,9 +7,7 @@ import (
 )
 
 // ShowTable is a command that prints the help menu.
-type ShowTable struct {
-	Commands *Commands
-}
+type ShowTable struct{}
 
 // Execute executes the command.
 func (h *ShowTable) Execute(cfg *config.Config, args ...string) error {

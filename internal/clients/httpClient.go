@@ -90,6 +90,8 @@ func httpAPIHandler[T any](c *HTTPClient, url string) (T, error) {
 		return responseObject, err
 	}
 
+	defer res.Body.Close()
+
 	isJSON := utils.CheckJSON(res)
 	if !isJSON {
 		var responseObject T

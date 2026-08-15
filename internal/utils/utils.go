@@ -15,6 +15,7 @@ func CleanInput(text string) []string {
 	return words
 }
 
+// CheckJSON checks the content-tyoe of the response header to make sure the response is JSON
 func CheckJSON(res *http.Response) bool {
 	return res.Header.Get("Content-Type") == "application/json"
 }

@@ -2,6 +2,7 @@ package commands
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/SamuelAboelkhir/CompGoR/internal/clients"
@@ -66,24 +67,25 @@ func queryCommandHandler(cfg *config.Config, args ...string) error {
 	pubChemClient, ok := cfg.APIClients["pubChem"]
 
 	if !ok {
-		return fmt.Errorf("pubChem client not found")
+		return errors.New("pubChem client not found")
 	}
 
 	c, ok := pubChemClient.(*clients.HTTPClient)
-	if ok {
-		elements, err := c.GetCompounds(query.input.domain, query.input.namespace, query.input.identifiers, query.output)
-		if err != nil {
-			return err
-		}
-		for _, element := range elements.PCCompounds {
-			elementID, _ := json.MarshalIndent(element.ID, "", " ")
-			elementProps, _ := json.MarshalIndent(element.Props, "", " ")
-			fmt.Println("Element ID:", string(elementID))
-			fmt.Println("Props: ", string(elementProps))
-			for _, atom := range element.Atoms.Element {
-				atom, _ := json.MarshalIndent(atom, "", " ")
-				fmt.Println("Atom:", string(atom))
-			}
+	if !ok {
+		return errors.New("pubChem client is not an HTTP client")
+	}
+	elements, err := c.GetCompounds(query.input.domain, query.input.namespace, query.input.identifiers, query.output)
+	if err != nil {
+		return err
+	}
+	for _, element := range elements.PCCompounds {
+		elementID, _ := json.MarshalIndent(element.ID, "", " ")
+		elementProps, _ := json.MarshalIndent(element.Props, "", " ")
+		fmt.Println("Element ID:", string(elementID))
+		fmt.Println("Props: ", string(elementProps))
+		for _, atom := range element.Atoms.Element {
+			atom, _ := json.MarshalIndent(atom, "", " ")
+			fmt.Println("Atom:", string(atom))
 		}
 	}
 	return nil

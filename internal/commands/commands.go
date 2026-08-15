@@ -26,11 +26,7 @@ func (c *Commands) Run(cfg *config.Config, name string, args ...string) error {
 	if !ok {
 		return errors.New("please provide a valid command name")
 	}
-	err := command.Execute(cfg, args...)
-	if err != nil {
-		return err
-	}
-	return nil
+	return command.Execute(cfg, args...)
 }
 
 // Register adds a command to the map of registered commands.

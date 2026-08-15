@@ -10,9 +10,7 @@ import (
 )
 
 // FetchJSONFromURL is a command to fetch generic data of JSON format.
-type FetchJSONFromURL struct {
-	Commands *Commands
-}
+type FetchJSONFromURL struct{}
 
 // Execute executes the fetchdata command.
 func (g *FetchJSONFromURL) Execute(cfg *config.Config, args ...string) error {
@@ -24,7 +22,7 @@ func (g *FetchJSONFromURL) Execute(cfg *config.Config, args ...string) error {
 	defaultClient, ok := cfg.APIClients["default"]
 
 	if !ok {
-		return fmt.Errorf("pubChem client not found")
+		return errors.New("pubChem client not found")
 	}
 
 	c, ok := defaultClient.(*clients.HTTPClient)
